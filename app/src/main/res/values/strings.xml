@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TasksApp</string>
+    <string name="warning">Both title and content need to be non-empty</string>
+</resources>
