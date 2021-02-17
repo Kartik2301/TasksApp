@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteBlobTooBigException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -75,7 +76,11 @@ public class AddNote extends AppCompatActivity {
                             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                             byte[] imageBytes = byteArrayOutputStream.toByteArray();
-                            contentValues.put(DataContract.NoteEntry.COLUMN_IMAGE, imageBytes);
+                            try {
+                                contentValues.put(DataContract.NoteEntry.COLUMN_IMAGE, imageBytes);
+                            } catch (SQLiteBlobTooBigException e) {
+                                Toast.makeText(getApplicationContext(), "Image resolution too large", Toast.LENGTH_SHORT).show();
+                            }
                         } catch (IOException e) {
 
                         }
